@@ -3,14 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+    "homepage": "https://oreoiscoding.github.io/manga-web",  
+
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
       "predeploy": "npm run build",
   "deploy": "gh-pages -d build",
-    "homepage": "https://oreoiscoding.github.io/manga-web",
-    "preview": "vite preview"
+     "preview": "vite preview"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",
