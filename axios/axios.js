@@ -1,12 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: 'https://api.mangadex.org',
+  baseURL: "https://api.mangadex.org",
   headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-Requested-With": "XMLHttpRequest",
   },
-  withCredentials: false
+  withCredentials: false,
 });
 
 // Add response interceptor to handle errors
@@ -14,9 +15,9 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      console.error('API Error:', error.response.data);
+      console.error("API Error:", error.response.data);
     } else if (error.request) {
-      console.error('Network Error:', error.message);
+      console.error("Network Error:", error.message);
     }
     return Promise.reject(error);
   }
