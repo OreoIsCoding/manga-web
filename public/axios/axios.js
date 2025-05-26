@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://api.mangadex.org",
+    baseURL: 'https://cors-anywhere.herokuapp.com/https://api.mangadex.org',
+
+// baseURL: "https://api.mangadex.org",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
