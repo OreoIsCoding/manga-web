@@ -65,27 +65,51 @@ function HomePage() {
             <div className="grid grid-cols-2 gap-4">
               <Link 
                 to="/manga/random"
-                className="bg-blue-600 hover:bg-blue-700 text-white text-center font-bold py-3 px-6 rounded-lg transition-colors"
+                className="group relative overflow-hidden bg-gradient-to-r from-blue-400/30 to-blue-500/30 hover:from-blue-400/40 hover:to-blue-500/40 text-white/90 text-center font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg backdrop-blur-sm border border-white/10"
               >
-                Random Manga
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                  </svg>
+                  Random Manga
+                </span>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-white" />
               </Link>
               <Link 
                 to="/manga/popular"
-                className="bg-gray-700 hover:bg-gray-600 text-white text-center font-bold py-3 px-6 rounded-lg transition-colors"
+                className="group relative overflow-hidden bg-gradient-to-r from-violet-400/30 to-violet-500/30 hover:from-violet-400/40 hover:to-violet-500/40 text-white/90 text-center font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg backdrop-blur-sm border border-white/10"
               >
-                Popular Now
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                  </svg>
+                  Popular Now
+                </span>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-white" />
               </Link>
               <Link 
                 to="/manga/latest"
-                className="bg-gray-700 hover:bg-gray-600 text-white text-center font-bold py-3 px-6 rounded-lg transition-colors"
+                className="group relative overflow-hidden bg-gradient-to-r from-teal-400/30 to-teal-500/30 hover:from-teal-400/40 hover:to-teal-500/40 text-white/90 text-center font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg backdrop-blur-sm border border-white/10"
               >
-                Latest Updates
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Latest Updates
+                </span>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-white" />
               </Link>
               <Link 
                 to="/search"
-                className="bg-gray-700 hover:bg-gray-600 text-white text-center font-bold py-3 px-6 rounded-lg transition-colors"
+                className="group relative overflow-hidden bg-gradient-to-r from-rose-400/30 to-rose-500/30 hover:from-rose-400/40 hover:to-rose-500/40 text-white/90 text-center font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg backdrop-blur-sm border border-white/10"
               >
-                Browse All
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                  Browse All
+                </span>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-white" />
               </Link>
             </div>
           </div>

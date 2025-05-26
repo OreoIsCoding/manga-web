@@ -116,6 +116,40 @@ function MangaDetailsPage() {
           <div className="md:col-span-2">
             <h1 className="text-3xl font-bold text-gray-100 mb-4">{title}</h1>
             
+            {/* Metadata Section */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              {manga.author && (
+                <div>
+                  <h3 className="text-sm font-medium text-gray-400">Author</h3>
+                  <p className="text-gray-200">{manga.author}</p>
+                </div>
+              )}
+              {manga.artist && manga.artist !== manga.author && (
+                <div>
+                  <h3 className="text-sm font-medium text-gray-400">Artist</h3>
+                  <p className="text-gray-200">{manga.artist}</p>
+                </div>
+              )}
+              <div>
+                <h3 className="text-sm font-medium text-gray-400">Status</h3>
+                <p className="text-gray-200 capitalize">{manga.attributes.status}</p>
+              </div>
+            </div>
+
+            {/* Tags/Genres */}
+            {manga.attributes.tags && (
+              <div className="mb-6">
+                <h3 className="text-sm font-medium text-gray-400 mb-2">Genres</h3>
+                <div className="flex flex-wrap gap-2">
+                  {manga.attributes.tags.map(tag => (
+                    <span key={tag.id} className="px-3 py-1 rounded-full bg-gray-700 text-gray-300 text-sm">
+                      {tag.attributes.name.en}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Main Description */}
             <div className="prose prose-invert max-w-none space-y-4">
               {mainDesc.split('\n\n').map((paragraph, idx) => (

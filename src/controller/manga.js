@@ -1,5 +1,15 @@
 import api from '../../public/axios/axios.js';
 
+// Add this helper function at the top of the file
+function processMangaData(manga) {
+  const coverRelationship = manga.relationships.find(rel => rel.type === 'cover_art');
+  const coverFileName = coverRelationship?.attributes?.fileName;
+  return {
+    ...manga,
+    coverUrl: coverFileName ? `https://uploads.mangadex.org/covers/${manga.id}/${coverFileName}` : null
+  };
+}
+
 export async function fetchMangaIdsByTitle(title) {
   const resp = await api.get('/manga', {
     params: { title }
@@ -18,7 +28,7 @@ export async function fetchAllManga() {
       hasAvailableChapters: true
     }
   });
-  return resp.data.data;
+  return resp.data.data.map(processMangaData);
 }
 
 // Get manga details (including cover info) by mangaId
@@ -56,9 +66,29 @@ export async function fetchCovers({ limit = 10, offset = 0, manga = [], ids = []
 
 export async function searchManga(query) {
   try {
-    const response = await fetch(`https://api.mangadex.org/manga?limit=20&title=${query}`);
-    const data = await response.json();
-    return data.data || [];
+    const response = await api.get('/manga', {
+      params: {
+        limit: 20,
+        title: query,
+        includes: ['cover_art', 'author'],
+        contentRating: ['safe', 'suggestive'],
+        hasAvailableChapters: true
+      }
+    });
+    
+    return response.data.data.map(manga => {
+      const coverRelationship = manga.relationships.find(rel => rel.type === 'cover_art');
+      const authorRelationship = manga.relationships.find(rel => rel.type === 'author');
+      const coverFileName = coverRelationship?.attributes?.fileName;
+      
+      return {
+        id: manga.id,
+        title: manga.attributes.title.en || Object.values(manga.attributes.title)[0],
+        author: authorRelationship?.attributes?.name || 'Unknown Author',
+        coverImage: coverFileName ? `https://uploads.mangadex.org/covers/${manga.id}/${coverFileName}` : null,
+        description: manga.attributes.description.en || Object.values(manga.attributes.description)[0]
+      };
+    });
   } catch (error) {
     console.error('Error searching manga:', error);
     return [];
@@ -67,10 +97,19 @@ export async function searchManga(query) {
 
 export async function getMangaDetails(mangaId) {
   try {
-    const response = await api.get(`/manga/${mangaId}?includes[]=cover_art`);
+    const response = await api.get(`/manga/${mangaId}`, {
+      params: {
+        'includes[]': ['cover_art', 'author', 'artist', 'tag']
+      }
+    });
     const manga = response.data.data;
     const coverRelationship = manga.relationships.find(rel => rel.type === 'cover_art');
+    const author = manga.relationships.find(rel => rel.type === 'author');
+    const artist = manga.relationships.find(rel => rel.type === 'artist');
+    
     manga.coverFileName = coverRelationship?.attributes?.fileName;
+    manga.author = author?.attributes?.name;
+    manga.artist = artist?.attributes?.name;
     return manga;
   } catch (error) {
     console.error('Error fetching manga details:', error);
@@ -157,24 +196,14 @@ export async function getChapterPages(chapterId) {
 
 export async function fetchRandomManga(amount = 10) {
   try {
-    // First get random manga IDs
     const randomResponse = await api.get('/manga/random', {
       params: {
         limit: amount,
         contentRating: ['safe', 'suggestive'],
+        includes: ['cover_art']
       }
     });
-
-    // Then fetch full details including covers for each manga
-    const mangaIds = randomResponse.data.data.map(manga => manga.id);
-    const detailsResponse = await api.get('/manga', {
-      params: {
-        ids: mangaIds,
-        includes: ['cover_art'],
-      }
-    });
-
-    return detailsResponse.data.data;
+    return randomResponse.data.data.map(processMangaData);
   } catch (error) {
     console.error('Error fetching random manga:', error);
     return [];
@@ -191,7 +220,7 @@ export async function fetchPopularManga() {
         order: { followedCount: 'desc' }
       }
     });
-    return response.data.data;
+    return response.data.data.map(processMangaData);
   } catch (error) {
     console.error('Error fetching popular manga:', error);
     return [];
@@ -208,7 +237,7 @@ export async function fetchLatestManga() {
         order: { latestUploadedChapter: 'desc' }
       }
     });
-    return response.data.data;
+    return response.data.data.map(processMangaData);
   } catch (error) {
     console.error('Error fetching latest manga:', error);
     return [];
